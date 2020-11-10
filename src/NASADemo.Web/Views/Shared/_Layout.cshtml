@@ -1,0 +1,27 @@
+﻿@{
+    var preTitle = !String.IsNullOrWhiteSpace(Convert.ToString(ViewBag.Title)) ? $"{ViewBag.Title} - " : "";
+    var title = $"{preTitle}{Configuration["AppMetadata:Name"]}";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>@title</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Demo app for displaying NASA images." />
+    
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
+    <environment include="Development">
+        <link rel="stylesheet" href="~/dist/styles.css" />
+    </environment>
+    <environment exclude="Development">
+        <link rel="stylesheet" href="~/dist/styles.css" asp-append-version="true" />
+    </environment>
+    @RenderSection("styles", required: false)
+</head>
+<body>
+    @RenderBody()
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

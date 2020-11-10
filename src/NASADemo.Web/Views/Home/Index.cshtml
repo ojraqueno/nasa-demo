@@ -1,0 +1,39 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div x-data="window.vm()" x-cloak>
+    <div class="w-64 mx-auto my-6">
+        <div class="text-2xl text-center">@Configuration["AppMetadata:Name"]</div>
+    </div>
+    <form action="/api/nasa/getRoverPhotosByDate" enctype="multipart/form-data" method="POST" class="w-64 mx-auto" x-on:submit.prevent="submit">
+        <div class="mb-4">
+            <label class="block mb-2">File upload:</label>
+            <input type="file" name="File" class="border w-full p-1" x-bind:disabled="inProgress">
+        </div>
+        <button class="bg-gray-700 hover:bg-gray-800 text-white w-full p-2 mb-4" x-text="buttonText" x-bind:disabled="inProgress"></button>
+        <div class="p-2 mb-4 text-center bg-green-500 text-gray-100" x-show="uploadAttempted && !inProgress && successMessage">
+            <span x-text="successMessage"></span>
+        </div>
+        <div class="p-2 mb-4 text-center bg-red-500 text-gray-100" x-show="uploadAttempted && !inProgress && errorMessage">
+            <span x-text="errorMessage"></span>
+        </div>
+    </form>
+    <div class="w-9/12 mx-auto" x-show="uploadAttempted && !inProgress">
+        <div class="flex flex-wrap" x-show="downloadedFiles.length">
+            <template x-for="file in downloadedFiles" :key="file.id">
+                <div class="w-1/4 p-2">
+                    <a x-bind:href="file.imageUrl" target="_blank"><img x-bind:src="file.imageUrl" /></a>
+                </div>
+            </template>
+        </div>
+        <div x-show="!downloadedFiles.length">
+            <p>No files found for given dates.</p>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="~/dist/home-index.bundle.js"></script>
+}

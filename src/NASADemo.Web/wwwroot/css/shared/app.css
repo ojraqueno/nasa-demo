@@ -1,0 +1,12 @@
+﻿@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+/* 
+    Prevent FOUC.
+*/
+[x-cloak] {
+    display: none;
+}
